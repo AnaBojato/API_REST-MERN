@@ -1,5 +1,5 @@
 const { Response } = require("../utils/Response");
-const UsuarioModel = require("../models/Usuario");
+const UsuarioModel = require("../model/user");
 const usuarioRepository = require("../repository/UsuarioRepository");
 
 async function registrarUsuario(req, res) {
