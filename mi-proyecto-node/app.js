@@ -1,10 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const user_routes = require("./src/routes/UsuarioRoutes");
+
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
+
 
 const app = express();
 
+const user_routes = require("./src/routes/UsuarioRoutes");
 // Para datos codificados desde formularios
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -19,6 +23,8 @@ app.use(
 
 // Rutas
 app.use("/api", user_routes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Ruta simple para verificar que el servidor funciona
 app.get("/status", (req, res) => {

@@ -1,7 +1,7 @@
 const usuarioModel = require("../model/user");
 
 // CREATE
-module.exports.createUser = async (usuario) => {
+const createUser = async (usuario) => {
     try {
         return await usuario.save();
     } catch (err) {
@@ -10,7 +10,7 @@ module.exports.createUser = async (usuario) => {
 };
 
 // READ - find all users
-module.exports.findAll = async () => {
+const findAllUsers = async () => {
     try {
         return await usuarioModel.find();
     } catch (err) {
@@ -18,41 +18,42 @@ module.exports.findAll = async () => {
     }
 };
 
-// READ - find users by email
-module.exports.findByEmail = async (emailUser) => {
+// READ - find user by ID
+const findUserById = async (id) => {
     try {
-        return await usuarioModel.find({ email: emailUser });
+        return await usuarioModel.findById(id);
     } catch (err) {
-        throw new Error('Error al buscar los datos en la base de datos');
+        throw new Error('Error al buscar usuario por ID');
     }
 };
 
-// READ - find one user by email
-module.exports.findOneEmail = async (emailUser) => {
-    try {
-        return await usuarioModel.findOne({ email: emailUser });
-    } catch (err) {
-        throw new Error('Error al buscar los datos en la base de datos');
-    }
-};
-
-// UPDATE - update user by ID
-module.exports.update = async (object) => {
+// UPDATE
+const updateUser = async (object) => {
     try {
         return await usuarioModel.findByIdAndUpdate(
             { _id: object.id },
-            { email: object.emailUser }
+            { email: object.emailUser },
+            { new: true }
         );
     } catch (err) {
         throw new Error('Error al actualizar en la base de datos');
     }
 };
 
-// DELETE - delete user by ID
-module.exports.delete = async (id) => {
+// DELETE
+const deleteUser = async (id) => {
     try {
         return await usuarioModel.findByIdAndDelete({ _id: id });
     } catch (err) {
         throw new Error('Error al eliminar en la base de datos');
     }
+};
+
+// EXPORTACIONES CORRECTAS
+module.exports = {
+    createUser,
+    findAllUsers,
+    findUserById,
+    updateUser,
+    deleteUser
 };
