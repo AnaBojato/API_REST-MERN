@@ -14,19 +14,21 @@ async function registrarUsuario(req, res) {
     usuario.password = password;
     usuario.typeUser = typeUser;
 
-    // Guardar el usuario en el repositorio
+    // Guardar en base de datos
     const resp = await usuarioRepository.createUser(usuario);
+
     if (resp) {
       Response.status = 201;
       Response.message = "Datos guardados correctamente en la base de datos";
       Response.result = resp;
-      res.status(201).send(Response);
+      return res.status(201).send(Response);
     }
+
   } catch (err) {
-    console.log(err);
+    console.error(err);
     Response.status = 500;
     Response.message = err.message;
-    res.status(500).send(Response);
+    return res.status(500).send(Response);
   }
 }
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const user_routes = require("./src/routes/UsuarioRoutes");
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(
   })
 );
 
+// Rutas
+app.use("/api", user_routes);
 
 // Ruta simple para verificar que el servidor funciona
 app.get("/status", (req, res) => {
